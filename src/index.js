@@ -42,6 +42,8 @@ import $ from 'jquery';
 import Question from 'eduway-h5p-question';
 
 import './ejs';
+//TODO: move out
+import './styles.css';
 
 /**
  * Module for creating a multiple choice question
