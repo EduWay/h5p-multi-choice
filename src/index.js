@@ -1,6 +1,5 @@
 /*global EJS*/
 // Will render a Question with multiple choices for answers.
-
 // Options format:
 // {
 //   title: "Optional title for question box",
@@ -15,8 +14,6 @@
 //
 // Events provided:
 // - h5pQuestionAnswered: Triggered when a question has been answered.
-
-var H5P = H5P || {};
 
 /**
  * @typedef {Object} Options
@@ -41,6 +38,10 @@ var H5P = H5P || {};
  * @property {string} [confirmCheck.cancelLabel]
  * @property {string} [confirmCheck.confirmLabel]
  */
+import $ from 'jquery';
+import Question from 'eduway-h5p-question';
+
+import './ejs';
 
 /**
  * Module for creating a multiple choice question
@@ -48,17 +49,17 @@ var H5P = H5P || {};
  * @param {Options} options
  * @param {number} contentId
  * @param {Object} contentData
- * @returns {H5P.MultiChoice}
+ * @returns {MultiChoice}
  * @constructor
  */
-H5P.MultiChoice = function (options, contentId, contentData) {
-  if (!(this instanceof H5P.MultiChoice))
-    return new H5P.MultiChoice(options, contentId, contentData);
+export function MultiChoice (options, contentId, contentData) {
+  if (!(this instanceof MultiChoice))
+    return new MultiChoice(options, contentId, contentData);
+
   var self = this;
   this.contentId = contentId;
   this.contentData = contentData;
-  H5P.Question.call(self, 'multichoice');
-  var $ = H5P.jQuery;
+  Question.call(self, 'multichoice');
 
   // checkbox or radiobutton
   var texttemplate =
@@ -196,7 +197,7 @@ H5P.MultiChoice = function (options, contentId, contentData) {
   };
 
   /**
-   * Register the different parts of the task with the H5P.Question structure.
+   * Register the different parts of the task with the Question structure.
    */
   self.registerDomElements = function () {
     var media = params.media;
@@ -510,7 +511,7 @@ H5P.MultiChoice = function (options, contentId, contentData) {
    * Hide solution for the given answer(s)
    *
    * @private
-   * @param {H5P.jQuery} $answer
+   * @param {jQuery} $answer
    */
   var hideSolution = function ($answer) {
     $answer
@@ -591,10 +592,12 @@ H5P.MultiChoice = function (options, contentId, contentData) {
     self.showCheckSolution();
     disableInput();
 
+    /* TODO
     var xAPIEvent = self.createXAPIEventTemplate('answered');
     addQuestionToXAPI(xAPIEvent);
     addResponseToXAPI(xAPIEvent);
     self.trigger(xAPIEvent);
+    */
   };
 
   /**
@@ -738,7 +741,7 @@ H5P.MultiChoice = function (options, contentId, contentData) {
   var getFeedbackText = function (score, max) {
     var ratio = (score / max);
 
-    var feedback = H5P.Question.determineOverallFeedback(params.overallFeedback, ratio);
+    var feedback = Question.determineOverallFeedback(params.overallFeedback, ratio);
 
     return feedback.replace('@score', score).replace('@total', max);
   };
@@ -751,7 +754,7 @@ H5P.MultiChoice = function (options, contentId, contentData) {
   this.showCheckSolution = function (skipFeedback) {
     var scorePoints;
     if (!(params.behaviour.singleAnswer || params.behaviour.singlePoint || !params.behaviour.showScorePoints)) {
-      scorePoints = new H5P.Question.ScorePoints();
+      scorePoints = new Question.ScorePoints();
     }
 
     $myDom.find('.h5p-answer').each(function (i, e) {
@@ -936,6 +939,7 @@ H5P.MultiChoice = function (options, contentId, contentData) {
   /**
    * Add the response part to an xAPI event
    *
+   * TODO
    * @param {H5P.XAPIEvent} xAPIEvent
    *  The xAPI event we will add a response to
    */
@@ -965,7 +969,8 @@ H5P.MultiChoice = function (options, contentId, contentData) {
    * @return {number[]} map pointing from original answers to shuffled answers
    */
   var getShuffleMap = function() {
-    params.answers = H5P.shuffleArray(params.answers);
+    //TODO
+    params.answers = shuffleArray(params.answers);
 
     // Create a map from the new id to the old one
     var idMap = [];
@@ -973,6 +978,24 @@ H5P.MultiChoice = function (options, contentId, contentData) {
       idMap[i] = params.answers[i].originalOrder;
     }
     return idMap;
+  };
+  //TODO
+  function shuffleArray(array) {
+    // TODO: Consider if this should be a part of core. I'm guessing very few libraries are going to use it.
+    if (!(array instanceof Array)) {
+      return;
+    }
+
+    var i = array.length, j, tempi, tempj;
+    if ( i === 0 ) return false;
+    while ( --i ) {
+      j       = Math.floor( Math.random() * ( i + 1 ) );
+      tempi   = array[i];
+      tempj   = array[j];
+      array[i] = tempj;
+      array[j] = tempi;
+    }
+    return array;
   };
 
   // Initialization code
@@ -991,7 +1014,6 @@ H5P.MultiChoice = function (options, contentId, contentData) {
 
   // Restore previous state
   if (contentData && contentData.previousState !== undefined) {
-
     // Restore answers
     if (contentData.previousState.answers) {
       if (!idMap) {
@@ -1053,9 +1075,9 @@ H5P.MultiChoice = function (options, contentId, contentData) {
     }
   }
 
-  H5P.MultiChoice.counter = (H5P.MultiChoice.counter === undefined ? 0 : H5P.MultiChoice.counter + 1);
+  MultiChoice.counter = (MultiChoice.counter === undefined ? 0 : MultiChoice.counter + 1);
   params.role = (params.behaviour.singleAnswer ? 'radiogroup' : 'group');
-  params.label = 'h5p-mcq' + H5P.MultiChoice.counter;
+  params.label = 'h5p-mcq' + MultiChoice.counter;
 
   /**
    * Pack the current state of the interactivity into a object that can be
@@ -1095,9 +1117,43 @@ H5P.MultiChoice = function (options, contentId, contentData) {
   };
 
   this.getTitle = function () {
-    return H5P.createTitle((this.contentData && this.contentData.metadata && this.contentData.metadata.title) ? this.contentData.metadata.title : 'Multiple Choice');
+    const title = (
+      this.contentData &&
+      this.contentData.metadata &&
+      this.contentData.metadata.title
+    ) ? this.contentData.metadata.title : 'Multiple Choice';
+    return createTitle(title);
   };
 };
 
-H5P.MultiChoice.prototype = Object.create(H5P.Question.prototype);
-H5P.MultiChoice.prototype.constructor = H5P.MultiChoice;
+/**
+ * Create title
+ * TODO
+ *
+ * @param {string} rawTitle
+ * @param {number} maxLength
+ * @returns {string}
+ */
+function createTitle(rawTitle, maxLength) {
+  if (!rawTitle) {
+    return '';
+  }
+  if (maxLength === undefined) {
+    maxLength = 60;
+  }
+  var title = $('<div></div>')
+    .text(
+      // Strip tags
+      rawTitle.replace(/(<([^>]+)>)/ig,"")
+    // Escape
+    ).text();
+  if (title.length > maxLength) {
+    title = title.substr(0, maxLength - 3) + '...';
+  }
+  return title;
+};
+
+MultiChoice.prototype = Object.create(Question.prototype);
+MultiChoice.prototype.constructor = MultiChoice;
+
+export default MultiChoice;

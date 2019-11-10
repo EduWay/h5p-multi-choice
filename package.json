@@ -1,0 +1,39 @@
+{
+  "name": "eduway-h5p-multichoice",
+  "version": "0.0.1",
+  "description": "H5P Multi Choice Fork",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EduWay/h5p-multi-choice.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EduWay/h5p-multi-choice/issues"
+  },
+  "homepage": "https://github.com/EduWay/h5p-multi-choice#readme",
+  "devDependencies": {
+    "css-loader": "^3.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "url-loader": "^2.2.0",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1"
+  },
+  "peerDependencies": {
+    "jquery": "^1.12.4"
+  },
+  "dependencies": {
+    "eduway-h5p-lib": "git+ssh://git@github.com/EduWay/eduway-h5p-lib.git",
+    "eduway-h5p-question": "git+ssh://git@github.com/EduWay/eduway-h5p-question.git",
+    "eduway-h5p-ui": "git+ssh://git@github.com/EduWay/eduway-h5p-ui.git",
+    "font-awesome": "^4.7.0",
+    "jquery": "^1.12.4"
+  }
+}
