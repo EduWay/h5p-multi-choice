@@ -359,7 +359,7 @@ export function MultiChoice (options, contentId, contentData) {
         calcScore();
       }
 
-      self.triggerXAPI('interacted');
+      //self.triggerXAPI('interacted');
       hideSolution($ans);
 
       if (params.userAnswers.length) {
