@@ -28,13 +28,12 @@
     "webpack-dev-server": "^3.8.1"
   },
   "peerDependencies": {
-    "jquery": "^1.12.4"
+    "jquery": "^1.12.4",
+    "font-awesome": "^4.7.0"
   },
   "dependencies": {
-    "eduway-h5p-lib": "git+https://git@github.com/EduWay/eduway-h5p-lib.git",
-    "eduway-h5p-question": "git+https://git@github.com/EduWay/eduway-h5p-question.git",
-    "eduway-h5p-ui": "git+https://git@github.com/EduWay/eduway-h5p-ui.git",
-    "font-awesome": "^4.7.0",
-    "jquery": "^1.12.4"
+    "eduway-h5p-lib": "github:EduWay/eduway-h5p-lib",
+    "eduway-h5p-question": "github:EduWay/eduway-h5p-question",
+    "eduway-h5p-ui": "github:EduWay/eduway-h5p-ui"
   }
 }
