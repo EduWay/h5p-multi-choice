@@ -31,9 +31,9 @@
     "jquery": "^1.12.4"
   },
   "dependencies": {
-    "eduway-h5p-lib": "git+ssh://git@github.com/EduWay/eduway-h5p-lib.git",
-    "eduway-h5p-question": "git+ssh://git@github.com/EduWay/eduway-h5p-question.git",
-    "eduway-h5p-ui": "git+ssh://git@github.com/EduWay/eduway-h5p-ui.git",
+    "eduway-h5p-lib": "git+https://git@github.com/EduWay/eduway-h5p-lib.git",
+    "eduway-h5p-question": "git+https://git@github.com/EduWay/eduway-h5p-question.git",
+    "eduway-h5p-ui": "git+https://git@github.com/EduWay/eduway-h5p-ui.git",
     "font-awesome": "^4.7.0",
     "jquery": "^1.12.4"
   }
